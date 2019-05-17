@@ -1,7 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function Color({ name, hex, rgb }) {
+const decimalFromHex = hex => {
+  return Number.parseInt(`0x${hex}`, 16);
+};
+
+const rgbFromHex = hex => {
+  return {
+    red: decimalFromHex(hex.slice(1, 3)),
+    green: decimalFromHex(hex.slice(3, 5)),
+    blue: decimalFromHex(hex.slice(5, 7))
+  };
+};
+
+export default function Color({ name, hex }) {
+  const rgb = rgbFromHex(hex);
+
   return (
     <dl>
       <dt>Name</dt>
