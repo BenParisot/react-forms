@@ -2,27 +2,33 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
 export default class CreateColor extends PureComponent {
-    statis propTypes = {
-        addColor: PropTypes.func.isRequired
+    static propTypes = {
+      addColor: PropTypes.func.isRequired
     };
 
     state = {
-        name: undefined,
-        color: undefined
+      name: '',
+      color: '#000000'
     }
 
-    handleClick = event => {
-        event.preventDefault();
-        const { name, color } = this.state;
-        this.props.addColor({ name, hex: color });
+    handleSubmit = event => {
+      event.preventDefault();
+      const { name, color } = this.state;
+      this.props.addColor({ name, hex: color });
     }
 
     handleChange = ({ target }) => {
-        
+      this.setState({ [target.name]: target.value });
     }
 
-}
-
-CreateColor.propTypes = {
-
+    render() {
+      const { color, name } = this.state;
+      return (
+        <form onSubmit={this.handleSubmit}>
+          <input name="name" type="text" value={name} onChange={this.handleChange} />
+          <input name="color" type="color" value={color} onChange={this.handleChange} />
+          <button>Add Color to List</button>
+        </form>
+      );
+    }
 }
